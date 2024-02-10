@@ -1,0 +1,6 @@
+streamlit
+polygon-api-client
+pandas
+plotly
+yfinance  # If you continue to use Yahoo Finance for some data
+requests  # If making direct HTTP requests to the Polygon API
