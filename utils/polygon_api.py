@@ -1,19 +1,28 @@
-from polygon import RESTClient
+import requests
 
-def get_polygon_client(api_key):
-    return RESTClient(api_key)
+# Your Polygon API key
+API_KEY = "wdt08q8wl_s8yxIO0TCQatAiMFnDxbvk"
 
-def fetch_options_flow_data(client, ticker):
-    # Placeholder for fetching options flow data
-    # Replace with the actual API endpoint and parameters
-    return client.get(f'/v3/options/flow/{ticker}')
+def fetch_aggregates(ticker, multiplier, timespan, from_date, to_date):
+    url = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/{multiplier}/{timespan}/{from_date}/{to_date}"
+    params = {
+        "apiKey": API_KEY
+    }
+    response = requests.get(url, params=params)
+    return response.json()
 
-def fetch_dark_pool_data(client, ticker):
-    # Placeholder for fetching dark pool data
-    # Replace with the actual API endpoint and parameters
-    return client.get(f'/v3/darkpool/{ticker}')
+def fetch_last_trade(ticker):
+    url = f"https://api.polygon.io/v2/last/trade/{ticker}"
+    params = {
+        "apiKey": API_KEY
+    }
+    response = requests.get(url, params=params)
+    return response.json()
 
-def fetch_stock_data(client, ticker, start_date, end_date):
-    # Placeholder for fetching stock data
-    # Replace with the actual API endpoint and parameters
-    return client.get(f'/v2/aggs/ticker/{ticker}/range/1/day/{start_date}/{end_date}')
+def fetch_last_quote(ticker):
+    url = f"https://api.polygon.io/v2/last/nbbo/{ticker}"
+    params = {
+        "apiKey": API_KEY
+    }
+    response = requests.get(url, params=params)
+    return response.json()
