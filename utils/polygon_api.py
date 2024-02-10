@@ -26,3 +26,16 @@ def fetch_last_quote(ticker):
     }
     response = requests.get(url, params=params)
     return response.json()
+    
+def fetch_trades(ticker):
+    url = f"https://api.polygon.io/vX/trades/{ticker}"
+    params = {
+        "apiKey": API_KEY,
+        # Additional parameters might be needed depending on the API's filtering capabilities
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        trades = response.json()
+        return trades['results']  # Adjust based on the actual structure of the API response
+    else:
+        return []
