@@ -1,15 +1,16 @@
 import streamlit as st
-from utils.polygon_api import fetch_options_flow_data, fetch_dark_pool_data
+from utils.polygon_api import fetch_trades
 
 def show():
     st.title("Options Flow and Dark Pool Data")
-    
-    # Example ticker
+
     ticker = st.text_input("Enter Ticker", value="AAPL")
-    
-    # Assuming these functions return DataFrame or similar structured data
-    options_data = fetch_options_flow_data(ticker)
-    dark_pool_data = fetch_dark_pool_data(ticker)
-    
-    st.write("Options Flow Data", options_data)
-    st.write("Dark Pool Data", dark_pool_data)
+    if ticker:
+        # Fetch trades for the ticker
+        trades_data = fetch_trades(ticker)
+
+        # Filter for dark pool trades
+        dark_pool_trades = [trade for trade in trades_data if trade['exchange'] == 4 and 'trf_id' in trade]
+
+        st.subheader("Dark Pool Trades")
+        st.write(dark_pool_trades)
